@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 void main() {
   runApp(BMICalculatorApp());
@@ -65,38 +66,108 @@ class _BMICalculatorState extends State<BMICalculator> {
             TextField(
               controller: _heightController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Height (cm)",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _weightController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Weight (kg)",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _calculateBMI,
-              child: Text("Calculate BMI"),
+              child: const Text("Calculate BMI"),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             if (_bmi > 0)
               Column(
                 children: [
                   Text(
                     "Your BMI: ${_bmi.toStringAsFixed(1)}",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     _message,
-                    style: TextStyle(fontSize: 18, color: Colors.blue),
+                    style: const TextStyle(fontSize: 18, color: Colors.blue),
                   ),
+                  const SizedBox(height: 16),
+                  SfRadialGauge(
+                    axes: <RadialAxis>[
+                      RadialAxis(
+                        minimum: 10,
+                        maximum: 40,
+                        ranges: <GaugeRange>[
+                          GaugeRange(
+                            startValue: 10,
+                            endValue: 18.5,
+                            color: Colors.blue,
+                            label: 'Underweight',
+                            sizeUnit: GaugeSizeUnit.factor,
+                            startWidth: 0.15,
+                            endWidth: 0.15,
+                          ),
+                          GaugeRange(
+                            startValue: 18.5,
+                            endValue: 24.9,
+                            color: Colors.green,
+                            label: 'Normal',
+                            sizeUnit: GaugeSizeUnit.factor,
+                            startWidth: 0.15,
+                            endWidth: 0.15,
+                          ),
+                          GaugeRange(
+                            startValue: 24.9,
+                            endValue: 29.9,
+                            color: Colors.orange,
+                            label: 'Overweight',
+                            sizeUnit: GaugeSizeUnit.factor,
+                            startWidth: 0.15,
+                            endWidth: 0.15,
+                          ),
+                          GaugeRange(
+                            startValue: 29.9,
+                            endValue: 40,
+                            color: Colors.red,
+                            label: 'Obesity',
+                            sizeUnit: GaugeSizeUnit.factor,
+                            startWidth: 0.15,
+                            endWidth: 0.15,
+                          ),
+                        ],
+                        pointers: <GaugePointer>[
+                          NeedlePointer(
+                            value: _bmi,
+                            needleColor: Colors.black,
+                            knobStyle: const KnobStyle(color: Colors.black),
+                          ),
+                        ],
+                        annotations: <GaugeAnnotation>[
+                          GaugeAnnotation(
+                            widget: Text(
+                              _bmi > 0 ? _bmi.toStringAsFixed(1) : '',
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            angle: 90,
+                            positionFactor: 0.8, // Mengatur posisi angka agar lebih jauh dari jarum
+                          ),
+                        ],
+                        axisLabelStyle: const GaugeTextStyle(fontSize: 12), // Ukuran angka skala
+                        interval: 5, // Jarak antar skala
+                      ),
+                    ],
+                  )
+
                 ],
               ),
           ],
