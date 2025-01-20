@@ -1,0 +1,26 @@
+on:
+  push:
+    branch:
+      - bmi-2
+
+jobs:
+  build:
+    name: build app
+    runs-on: ubuntu-latest
+    steps:
+      - name: show the text
+        run: echo "ini step build"
+  test:
+    name: test app
+    runs-on: ubuntu-latest
+    steps:
+      - name: show the text
+        run: echo "ini step test"
+  deployment:
+    name: deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - name: show the text
+        run: /
+         echo "ini step deployment"
+         echo "deployment aplikasi
